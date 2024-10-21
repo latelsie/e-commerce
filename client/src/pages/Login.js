@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 const Login = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        
+       
         if (username === 'admin' && password === 'admin') {
-            onLogin({ username, role: 'admin' });
-            toast.success('Login successful! Welcome Admin.'); 
+            const userData = { username, role: 'admin' };
+            onLogin(userData);
+            toast.success('Login successful! Welcome Admin.');
             navigate('/admin'); 
         } else if (username === 'cashier' && password === 'cashier') {
-            onLogin({ username, role: 'cashier' });
+            const userData = { username, role: 'cashier' };
+            onLogin(userData);
             toast.success('Login successful! Welcome Cashier.');
             navigate('/'); 
         } else {
-            toast.error('Invalid credentials'); 
+            toast.error('Invalid credentials');
         }
     };
 

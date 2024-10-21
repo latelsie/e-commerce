@@ -25,13 +25,5 @@ function App() {
     </BrowserRouter>
   );
 }
-<Route path='/homes' element={<homes/>}/>
-<Link to='/addEdit' >AddEdit</Link>
-toast.sucess
-function app=()={
-  const fetchdata=async()={
-    const response  =await fetch('url');
 
-  }
-}
 export default App;

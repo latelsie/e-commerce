@@ -11,16 +11,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardChart from './pages/Dashboardchart'; 
 
-const AdminPage = () => {
-  return <h1>Welcome Admin, you can only view the records.</h1>;
-};
-
-const PrivateRoute = ({ user, role, children }) => {
+const PrivateRoute = ({ user, requiredRole, children }) => {
+ 
   if (!user) {
-    return <Navigate to="/login" />; 
+    return <Navigate to="/login" />;
   }
-
-  return user?.role === role ? children : <Navigate to="/login" />; 
+  
+  
+  if (user.role !== requiredRole) {
+    return <Navigate to="/login" />;
+  }
+  
+  return children;
 };
 
 function App() {
@@ -34,10 +36,12 @@ function App() {
   ]);
 
   const handleLogin = (userData) => {
+    console.log("Logging in user:", userData); 
     setUser(userData); 
   };
 
   const handleLogout = () => {
+    console.log("Logging out user"); 
     setUser(null); 
   };
 
@@ -51,28 +55,47 @@ function App() {
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
           
-          <Route
-            path="/"
-            element={
-              <PrivateRoute user={user} role="cashier">
-                <Homes />
-              </PrivateRoute>
-            }
-          />
+         
+          <Route path="/" element={
+            <PrivateRoute user={user} requiredRole="cashier">
+              <Homes />
+            </PrivateRoute>
+          } />
 
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute user={user} role="cashier">
-                <DashboardChart salesData={salesData} />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/dashboard" element={
+            <PrivateRoute user={user} requiredRole="cashier">
+              <DashboardChart salesData={salesData} />
+            </PrivateRoute>
+          } />
+
+          <Route path="/add" element={
+            <PrivateRoute user={user} requiredRole="cashier">
+              <AddEdit />
+            </PrivateRoute>
+          } />
+          <Route path="/update/:id" element={
+            <PrivateRoute user={user} requiredRole="cashier">
+              <AddEdit />
+            </PrivateRoute>
+          } />
+          <Route path="/view/:id" element={
+            <PrivateRoute user={user} requiredRole="cashier">
+              <View />
+            </PrivateRoute>
+          } />
+          <Route path="/about" element={
+            <PrivateRoute user={user} requiredRole="cashier">
+              <About />
+            </PrivateRoute>
+          } />
+
           
-          <Route path="/add" element={<PrivateRoute user={user} role="cashier"><AddEdit /></PrivateRoute>} />
-          <Route path="/update/:id" element={<PrivateRoute user={user} role="cashier"><AddEdit /></PrivateRoute>} />
-          <Route path="/view/:id" element={<PrivateRoute user={user} role="cashier"><View /></PrivateRoute>} />
-          <Route path="/about" element={<PrivateRoute user={user} role="cashier"><About /></PrivateRoute>} />
+          <Route path="/admin" element={
+            <PrivateRoute user={user} requiredRole="admin">
+              <Homes />
+            </PrivateRoute>
+          } />
+
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </div>

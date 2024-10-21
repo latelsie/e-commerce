@@ -15,7 +15,7 @@ const DashboardChart = ({ salesData }) => {
     datasets: [
       {
         label: 'Sales per Day',
-        data: salesData.map(data => data.sales), 
+        data: salesData.map(data => data.sales),
         backgroundColor: [
           'rgba(0, 128, 128, 0.6)',  
           'rgba(64, 224, 208, 0.6)', 

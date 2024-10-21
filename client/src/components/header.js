@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, Navigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faPlus, faInfoCircle, faEye, faSignOutAlt, faQuestionCircle, faChartBar } from '@fortawesome/free-solid-svg-icons'; // Added faChartBar for the dashboard icon
+import { faHome, faPlus, faInfoCircle, faEye, faSignOutAlt, faQuestionCircle, faChartBar } from '@fortawesome/free-solid-svg-icons'; 
 import './header.css';
 
 const Header = ({ userRole, onLogout }) => {
@@ -13,7 +13,6 @@ const Header = ({ userRole, onLogout }) => {
         setactivetab(path ? path : "homes");
     }, [location]);
 
-    // If no user role is provided, redirect to login
     if (!userRole) {
         return <Navigate to="/login" />;
     }
@@ -22,14 +21,15 @@ const Header = ({ userRole, onLogout }) => {
         <div className='header'>
             <Link to='/' className='logo'>H App</Link>
             <div className='header-right'>
-                {/* Cashier routes */}
+                
+
                 {userRole === 'cashier' && (
                     <>
-                        <Link to='/homes'>
-                            <p className={`${activetab === 'homes' ? 'active' : ''}`} onClick={() => setactivetab('homes')}>
-                                <FontAwesomeIcon icon={faHome} /> Home
-                            </p>
-                        </Link>
+                    <Link to='/homes'>
+                    <p className={`${activetab === 'homes' ? 'active' : ''}`} onClick={() => setactivetab('homes')}>
+                        <FontAwesomeIcon icon={faHome} /> Home
+                    </p>
+                </Link>
                         <Link to='/add'>
                             <p className={`${activetab === 'addEdit' ? 'active' : ''}`} onClick={() => setactivetab('addEdit')}>
                                 <FontAwesomeIcon icon={faPlus} /> Add
@@ -48,7 +48,6 @@ const Header = ({ userRole, onLogout }) => {
                     </>
                 )}
 
-                {/* Admin routes */}
                 {userRole === 'admin' && (
                     <>
                         <Link to='/homes'>
@@ -59,7 +58,6 @@ const Header = ({ userRole, onLogout }) => {
                     </>
                 )}
 
-                {/* Help and Logout (available for all roles) */}
                 <Link to='/help'>
                     <p className={`${activetab === 'help' ? 'active' : ''}`} onClick={() => setactivetab('help')}>
                         <FontAwesomeIcon icon={faQuestionCircle} /> Help

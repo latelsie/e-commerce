@@ -40,17 +40,14 @@ const Homes = () => {
     }
   };
 
- 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  
   const handleSort = (e) => {
     setSortField(e.target.value);
   };
- 
-  
+
   const filteredAndSortedData = Object.keys(data)
     .filter((id) => {
       const user = data[id];
@@ -73,9 +70,7 @@ const Homes = () => {
 
   return (
     <div style={{ marginTop: '100px' }}>
-      
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
-      
         <div style={{ display: 'flex', alignItems: 'center', marginRight: '20px' }}>
           <FontAwesomeIcon icon={faSearch} style={{ marginRight: '10px' }} />
           <input
@@ -86,8 +81,6 @@ const Homes = () => {
             style={{ padding: '5px', width: '300px' }}
           />
         </div>
-
-       
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <FontAwesomeIcon icon={faSort} style={{ marginRight: '10px' }} />
           <select onChange={handleSort} value={sortField} style={{ padding: '5px' }}>
@@ -96,8 +89,6 @@ const Homes = () => {
           </select>
         </div>
       </div>
-
-    
       <table className='styled-table' border="1">
         <thead>
           <tr>
